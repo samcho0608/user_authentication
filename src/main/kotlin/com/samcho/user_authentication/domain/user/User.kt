@@ -3,6 +3,9 @@ package com.samcho.user_authentication.domain.user
 import com.samcho.user_authentication.domain.user.email_address.EmailAddress
 import com.samcho.user_authentication.domain.user.phone.Phone
 
+/**
+ * 유저 정보 Entity
+ */
 class User(
     var id: String,
 
