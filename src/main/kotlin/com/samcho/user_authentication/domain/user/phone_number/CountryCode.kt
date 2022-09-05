@@ -1,4 +1,4 @@
-package com.samcho.user_authentication.domain.user.phone
+package com.samcho.user_authentication.domain.user.phone_number
 
 /**
  * 국가 번호를 저장하는 VO

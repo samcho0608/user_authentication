@@ -1,4 +1,4 @@
-package com.samcho.user_authentication.domain.user.phone
+package com.samcho.user_authentication.domain.user.phone_number
 
 
 /**

@@ -1,7 +1,7 @@
 package com.samcho.user_authentication.domain.user
 
 import com.samcho.user_authentication.domain.user.email_address.EmailAddress
-import com.samcho.user_authentication.domain.user.phone.Phone
+import com.samcho.user_authentication.domain.user.phone_number.PhoneNumber
 
 /**
  * 유저 정보 Entity
@@ -29,5 +29,5 @@ class AppUser(
     /**
      * 유저 전화번호
      */
-    var phone: Phone? = null,
+    var phone: PhoneNumber? = null,
 )

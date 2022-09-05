@@ -1,9 +1,9 @@
-package com.samcho.user_authentication.domain.user.phone
+package com.samcho.user_authentication.domain.user.phone_number
 
 /**
  * 핸드폰 정보 Entity
  */
-class Phone(
+class PhoneNumber(
     var id : String? = null,
 
     /**
