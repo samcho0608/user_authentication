@@ -64,4 +64,28 @@ internal class MemoryAppUserRepositoryTest {
 
         assertEquals(null, foundUser)
     }
+
+    @Test
+    fun updatePassword() {
+
+        val user = AppUser().apply {
+            email = EmailAddress("hgd1234@gmail.com")
+            name = "홍길동"
+            nicknm = "요리번쩍조리번쩍"
+            password = "hongGilDong1234"
+            phone = PhoneNumber().apply {
+                countryCode = CountryCode("82")
+                subscriberNumber = SubscriberNumber("1012341234")
+            }
+        }
+
+        val savedUser = userRepo.save(user)
+        val newPassword = "new password"
+
+        userRepo.updatePasswordById(id =  savedUser.id!!, newPassword= newPassword)
+        val targetUser = userRepo.findById(savedUser.id!!)
+
+        assertEquals(newPassword, targetUser!!.password)
+
+    }
 }

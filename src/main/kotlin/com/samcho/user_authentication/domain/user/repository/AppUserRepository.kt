@@ -7,4 +7,5 @@ interface AppUserRepository {
     fun findById(id: String): AppUser?
     fun findAppUserDetailById(id: String) : AppUserDetail?
     fun save(user: AppUser): AppUser
+    fun updatePasswordById(id: String, newPassword: String)
 }
