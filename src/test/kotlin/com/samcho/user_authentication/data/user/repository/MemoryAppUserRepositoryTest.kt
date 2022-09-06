@@ -52,6 +52,11 @@ internal class MemoryAppUserRepositoryTest {
         val foundUser = userRepo.findAppUserDetailById(user.id!!)
 
         assertNotEquals(null, foundUser)
+        assertEquals(user.id, foundUser!!.id)
+        assertEquals(user.nicknm, foundUser.nicknm)
+        assertEquals(user.email, foundUser.email)
+        assertEquals(user.phoneNumber, foundUser.phoneNumber)
+        assertEquals(user.name, foundUser.name)
     }
 
     @Test
