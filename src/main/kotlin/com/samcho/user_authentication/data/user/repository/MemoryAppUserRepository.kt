@@ -1,9 +1,10 @@
-package com.samcho.user_authentication.domain.user.repository
+package com.samcho.user_authentication.data.user.repository
 
 import com.samcho.user_authentication.domain.user.AppUser
 import com.samcho.user_authentication.domain.user.AppUserDetail
 import com.samcho.user_authentication.domain.user.email_address.EmailAddress
 import com.samcho.user_authentication.domain.user.phone_number.PhoneNumber
+import com.samcho.user_authentication.domain.user.repository.AppUserRepository
 
 class MemoryAppUserRepository : AppUserRepository {
     override fun findById(id: String): AppUser? = userDB[id]
