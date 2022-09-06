@@ -1,3 +1,5 @@
 package com.samcho.user_authentication.domain.user
 
-class AppUserNotFoundException : Exception("App User not found")
+import com.samcho.user_authentication.domain.core.exception.EntityNotFoundException
+
+class AppUserNotFoundException : EntityNotFoundException("App User")
