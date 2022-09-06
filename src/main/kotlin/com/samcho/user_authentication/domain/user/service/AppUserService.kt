@@ -1,8 +1,10 @@
 package com.samcho.user_authentication.domain.user.service
 
+import com.samcho.user_authentication.domain.core.exception.NotEnoughArgumentException
 import com.samcho.user_authentication.domain.user.AppUser
 import com.samcho.user_authentication.domain.user.AppUserDetail
 import com.samcho.user_authentication.domain.user.AppUserNotFoundException
+import com.samcho.user_authentication.domain.user.LogInFailureException
 import com.samcho.user_authentication.domain.user.repository.AppUserRepository
 
 /**
@@ -32,8 +34,32 @@ class AppUserService(
     fun signUp(user: AppUser): AppUser =
         appUserRepository.save(user)
 
+    /**
+     * @param user 로그인 시 필요한 유저 식별 정보. 비밀번호와 email/nicknm/phoneNumber 3 값 중 하나는 포함되어야함.
+     * @throws AppUserNotFoundException 제공된 유저 식별 정보와 일치하는 유저를 찾지 못한 경우에 발생
+     * @throws LogInFailureException 제공된 비밀번호가 유저의 비밀번호와 일치하지 않은 경우에 발생
+     * @throws NotEnoughArgumentException 로그인에 필요한 정보가 충분하게 제공되지 않은 경우 발생
+     */
     fun logIn(user: AppUser): AppUser {
-        TODO("not implemented yet")
+        if(!user.satisfiesLogInRequirements()) {
+            throw NotEnoughArgumentException()
+        }
+
+        val loggedInUser =
+            (if (user.phoneNumber != null) {
+                appUserRepository.findByPhoneNumber(user.phoneNumber!!.phoneNumber)
+            } else if (user.nicknm.isNotEmpty()) {
+                appUserRepository.findByNicknm(user.nicknm)
+            } else {
+                appUserRepository.findByEmail(user.email!!.emailAddress)
+            })
+                ?: throw AppUserNotFoundException()
+
+        if(loggedInUser.password != user.password) {
+            throw LogInFailureException()
+        }
+
+        return loggedInUser
     }
 
     fun resetPassword(user: AppUser, newPassword: String) {
