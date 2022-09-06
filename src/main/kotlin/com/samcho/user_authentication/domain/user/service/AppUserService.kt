@@ -6,11 +6,14 @@ import com.samcho.user_authentication.domain.user.AppUserDetail
 import com.samcho.user_authentication.domain.user.AppUserNotFoundException
 import com.samcho.user_authentication.domain.user.LogInFailureException
 import com.samcho.user_authentication.domain.user.repository.AppUserRepository
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 
 /**
  * AppUser 클래스의 CRUD 비즈니스 로직을 담당하는 클래스
  */
-class AppUserService(
+@Service
+class AppUserService @Autowired constructor(
     private val appUserRepository: AppUserRepository
 ) {
 
