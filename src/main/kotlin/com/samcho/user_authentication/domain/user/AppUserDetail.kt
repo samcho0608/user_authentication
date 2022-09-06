@@ -8,5 +8,5 @@ interface AppUserDetail {
     val nicknm: String
     val email: EmailAddress
     val name: String
-    val phone: PhoneNumber
+    val phoneNumber: PhoneNumber
 }

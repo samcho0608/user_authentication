@@ -21,7 +21,7 @@ class MemoryAppUserRepository : AppUserRepository {
                 get() = user.email!!
             override val name: String
                 get() = user.name
-            override val phone: PhoneNumber
+            override val phoneNumber: PhoneNumber
                 get() = user.phoneNumber!!
         }
     }
