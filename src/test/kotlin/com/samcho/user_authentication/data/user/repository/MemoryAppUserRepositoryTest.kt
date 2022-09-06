@@ -36,6 +36,28 @@ internal class MemoryAppUserRepositoryTest {
     }
 
     @Test
+    fun existsByIdUserExists() {
+        val user = AppUser().apply {
+            email = EmailAddress("hgd1234@gmail.com")
+            name = "홍길동"
+            nicknm = "요리번쩍조리번쩍"
+            password = "hongGilDong1234"
+            phoneNumber = PhoneNumber(
+                "821012341234"
+            )
+        }
+
+        val savedUser = userRepo.save(user)
+
+        assertEquals(true, userRepo.existsById(savedUser.id!!))
+    }
+
+    @Test
+    fun existsByIdUserDoesNotExists() {
+        assertEquals(false, userRepo.existsById("USER_0"))
+    }
+
+    @Test
     fun findAppUserDetailById() {
         val user = AppUser().apply {
             email = EmailAddress("hgd1234@gmail.com")
@@ -62,7 +84,6 @@ internal class MemoryAppUserRepositoryTest {
     @Test
     fun findAppUserDetailByIdNotFound() {
         val foundUser = userRepo.findAppUserDetailById("USER_ID")
-
         assertEquals(null, foundUser)
     }
 
