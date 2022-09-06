@@ -29,5 +29,5 @@ class AppUser(
     /**
      * 유저 전화번호
      */
-    var phone: PhoneNumber? = null,
+    var phoneNumber: PhoneNumber? = null,
 )

@@ -22,17 +22,14 @@ class MemoryAppUserRepository : AppUserRepository {
             override val name: String
                 get() = user.name
             override val phone: PhoneNumber
-                get() = user.phone!!
+                get() = user.phoneNumber!!
         }
     }
 
     override fun save(user: AppUser): AppUser {
         val newUserId = generateUserId()
-        val newPhoneId = generatePhoneId()
 
         user.apply { id = newUserId }
-        user.phone!!.apply { id = newPhoneId }
-        phoneDB[newPhoneId] = user.phone!!
         userDB[newUserId] = user
         return user
     }
@@ -45,20 +42,15 @@ class MemoryAppUserRepository : AppUserRepository {
      *  테스트 시에만 사용되며, 저장된 데이터를 지움
      */
     internal fun clearDB() {
-        phoneDB.clear()
         userDB.clear()
         userIdSequence = 0
-        phoneIdSequence = 0
     }
 
     companion object {
         val userDB = mutableMapOf<String, AppUser>()
         var userIdSequence = 0
-        val phoneDB = mutableMapOf<String, PhoneNumber>()
-        var phoneIdSequence = 0
 
         fun generateUserId() = "USER_${"${userIdSequence++}".padStart(0, '0')}"
-        fun generatePhoneId() = "PHONE_${"${phoneIdSequence++}".padStart(0, '0')}"
     }
 
 }

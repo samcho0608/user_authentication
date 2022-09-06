@@ -1,18 +1,14 @@
 package com.samcho.user_authentication.domain.user.phone_number
 
 /**
- * 핸드폰 정보 Entity
+ * 핸드폰 정보 VO
  */
-class PhoneNumber(
-    var id : String? = null,
-
-    /**
-     * 국가번호
-     */
-    var countryCode : CountryCode? = null,
-
-    /**
-     * 가입자 번호
-     */
-    var subscriberNumber : SubscriberNumber? = null,
-)
+data class PhoneNumber(
+    val phoneNumber: String
+) {
+    init {
+        if(!Regex("^[1-9]\\d{1,14}$").matches(phoneNumber)) {
+            throw InvalidPhoneNumberException()
+        }
+    }
+}
