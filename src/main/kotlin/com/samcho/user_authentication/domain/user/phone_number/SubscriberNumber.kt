@@ -11,7 +11,7 @@ data class SubscriberNumber(
     init {
         // E.164 공식 기준
         // * 12-14 자리 숫자
-        if(!Regex("^\\d{12,14}$").matches(subscriberNumber)) {
+        if(!Regex("^\\d{1,12}$").matches(subscriberNumber)) {
             throw InvalidSubscriberNumberException()
         }
     }

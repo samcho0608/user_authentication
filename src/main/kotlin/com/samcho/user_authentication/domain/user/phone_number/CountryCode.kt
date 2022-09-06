@@ -10,7 +10,7 @@ data class CountryCode(
     init {
         // E.164 공식 기준
         // * 1-3 자리 숫자
-        if(!Regex("^\\d{1,3}$").matches(countryCode)) {
+        if(!Regex("^[1-9]\\d{0,2}$").matches(countryCode)) {
             throw InvalidCountryCodeException()
         }
     }
