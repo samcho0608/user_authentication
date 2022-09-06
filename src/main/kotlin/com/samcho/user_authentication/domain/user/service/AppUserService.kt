@@ -13,19 +13,31 @@ import com.samcho.user_authentication.domain.user.repository.AppUserRepository
 class AppUserService(
     private val appUserRepository: AppUserRepository
 ) {
+
+    private fun validateIdSpecifiedAppUser(user: AppUser) {
+        if(user.id == null) {
+            throw NotEnoughArgumentException()
+        }
+    }
+
+
     /**
      * 특정 한 유저 민감하지 않은 정보를 불러오는 함수.
      * @param user 검색할 대상이 되는 유저. 해당 유저의 id값을 기준으로 검색함.
      */
-    fun findUserDetail(user: AppUser): AppUserDetail =
-        appUserRepository.findAppUserDetailById(user.id!!) ?: throw AppUserNotFoundException()
+    fun findUserDetail(user: AppUser): AppUserDetail {
+        validateIdSpecifiedAppUser(user)
+        return appUserRepository.findAppUserDetailById(user.id!!) ?: throw AppUserNotFoundException()
+    }
 
     /**
      * 특정 한 유저 전체 정보를 불러오는 함수.
      * @param user 검색할 대상이 되는 유저. 해당 유저의 id값을 기준으로 검색함.
      */
-    fun findUser(user: AppUser): AppUser =
-        appUserRepository.findById(user.id!!) ?: throw AppUserNotFoundException()
+    fun findUser(user: AppUser): AppUser {
+        validateIdSpecifiedAppUser(user)
+        return appUserRepository.findById(user.id!!) ?: throw AppUserNotFoundException()
+    }
 
     /**
      * 회원가입 함수
@@ -69,6 +81,8 @@ class AppUserService(
      * @throws AppUserNotFoundException 제공된 정보에 일치하는 유저를 찾을 수 없었을때 발생
      */
     fun resetPassword(user: AppUser, newPassword: String) {
+        validateIdSpecifiedAppUser(user)
+
         if(!appUserRepository.existsById(user.id!!)) {
             throw AppUserNotFoundException()
         }
