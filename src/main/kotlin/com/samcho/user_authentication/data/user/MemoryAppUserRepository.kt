@@ -6,6 +6,9 @@ import com.samcho.user_authentication.domain.user.email_address.EmailAddress
 import com.samcho.user_authentication.domain.user.phone_number.PhoneNumber
 import com.samcho.user_authentication.domain.user.repository.AppUserRepository
 
+/**
+ * AppUserRepository 클래스에 의존하는 클래스들의 단위 테스트를 위해 구현된 테스트용 클래스
+ */
 class MemoryAppUserRepository : AppUserRepository {
     override fun existsById(id: String): Boolean =
         userDB.containsKey(id)
@@ -28,6 +31,15 @@ class MemoryAppUserRepository : AppUserRepository {
                 get() = user.phoneNumber!!
         }
     }
+
+    override fun findByEmail(email: String): AppUser? =
+        userDB.values.find { it.email!!.emailAddress == email }
+
+    override fun findByNicknm(nicknm: String): AppUser? =
+        userDB.values.find { it.nicknm == nicknm }
+
+    override fun findByPhoneNumber(phoneNumber: String): AppUser? =
+        userDB.values.find { it.phoneNumber!!.phoneNumber == phoneNumber }
 
     override fun save(user: AppUser): AppUser {
         val newUserId = generateUserId()
