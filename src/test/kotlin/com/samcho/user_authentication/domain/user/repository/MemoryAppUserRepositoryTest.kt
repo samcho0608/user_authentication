@@ -51,8 +51,17 @@ internal class MemoryAppUserRepositoryTest {
             }
         }
 
+        userRepo.save(user)
+
         val foundUser = userRepo.findAppUserDetailById(user.id!!)
 
         assertNotEquals(null, foundUser)
+    }
+
+    @Test
+    fun findAppUserDetailByIdNotFound() {
+        val foundUser = userRepo.findAppUserDetailById("USER_ID")
+
+        assertEquals(null, foundUser)
     }
 }
