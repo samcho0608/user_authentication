@@ -2,11 +2,11 @@ package com.samcho.user_authentication.domain.user.service
 
 import com.samcho.user_authentication.data.user.repository.MemoryAppUserRepository
 import com.samcho.user_authentication.domain.user.AppUser
+import com.samcho.user_authentication.domain.user.UserNotFoundException
 import com.samcho.user_authentication.domain.user.email_address.EmailAddress
 import com.samcho.user_authentication.domain.user.phone_number.PhoneNumber
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotEquals
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 internal class AppUserServiceTest {
@@ -37,7 +37,14 @@ internal class AppUserServiceTest {
     }
 
     @Test
-    fun findUserDetail() {
+    fun findUserDetailUserDoesNotExists() {
+        assertThrows(UserNotFoundException::class.java) {
+
+            appUserService.findUserDetail(AppUser().apply { id = "USER_ID" })
+        }
+    }
+    @Test
+    fun findUserDetailUserExists() {
         val user = AppUser().apply {
             email = EmailAddress("hgd1234@gmail.com")
             name = "홍길동"
@@ -52,16 +59,25 @@ internal class AppUserServiceTest {
         val foundUser = appUserService.findUserDetail(user)
 
         assertNotEquals(null, foundUser)
-        assertEquals(user.id, foundUser!!.id)
+        assertEquals(user.id, foundUser.id)
         assertEquals(user.nicknm, foundUser.nicknm)
         assertEquals(user.email, foundUser.email)
         assertEquals(user.phoneNumber, foundUser.phoneNumber)
         assertEquals(user.name, foundUser.name)
-
     }
 
     @Test
-    fun resetPassword() {
+    fun resetPasswordUserDoesNotExist() {
+        val newPassword = "new password"
+
+        assertThrows(UserNotFoundException::class.java) {
+
+            appUserService.resetPassword(AppUser().apply { id = "USER_ID" }, newPassword)
+        }
+    }
+
+    @Test
+    fun resetPasswordUserExists() {
         val user = AppUser().apply {
             email = EmailAddress("hgd1234@gmail.com")
             name = "홍길동"
