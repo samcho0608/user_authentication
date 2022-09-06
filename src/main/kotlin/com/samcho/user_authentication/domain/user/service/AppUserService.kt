@@ -62,6 +62,12 @@ class AppUserService(
         return loggedInUser
     }
 
+    /**
+     * 비밀번호 재설정 함수
+     * @param user 비밀번호를 재설정할 유저
+     * @param newPassword 새로운 비밀번호
+     * @throws AppUserNotFoundException 제공된 정보에 일치하는 유저를 찾을 수 없었을때 발생
+     */
     fun resetPassword(user: AppUser, newPassword: String) {
         if(!appUserRepository.existsById(user.id!!)) {
             throw AppUserNotFoundException()
