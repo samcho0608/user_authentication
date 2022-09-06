@@ -37,6 +37,10 @@ class MemoryAppUserRepository : AppUserRepository {
         return user
     }
 
+    override fun updatePasswordById(id: String, newPassword: String) {
+        userDB[id]?.password= newPassword
+    }
+
     /**
      *  테스트 시에만 사용되며, 저장된 데이터를 지움
      */
