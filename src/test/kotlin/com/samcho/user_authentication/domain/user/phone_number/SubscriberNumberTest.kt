@@ -22,13 +22,14 @@ internal class SubscriberNumberTest {
 
     @Test
     fun testPhoneNumberLength() {
-        for (i in 11.. 15) {
+        for (i in 0.. 15) {
             val chars = mutableListOf<String>()
             for(j in 0 until i) {
                 chars.add("0")
             }
+
             val number = chars.joinToString(separator = "")
-            if (i in 12..14) {
+            if (i in 1..12) {
                 assertEquals(number, SubscriberNumber(number).subscriberNumber)
             } else {
                 assertThrows(InvalidSubscriberNumberException::class.java) {

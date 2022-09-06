@@ -18,6 +18,17 @@ internal class CountryCodeTest {
         }
     }
 
+    /**
+     * 0으로 시작할 경우, [InvalidSubscriberNumberException] 오류 처리 확인
+     */
+    @Test
+    fun testZeroAtTheBeginning() {
+        val number = "02"
+        assertThrows(InvalidCountryCodeException::class.java) {
+            CountryCode(number)
+        }
+    }
+
     // Length Test
 
     @Test
@@ -25,7 +36,7 @@ internal class CountryCodeTest {
         for (i in 0.. 4) {
             val chars = mutableListOf<String>()
             for(j in 0 until i) {
-                chars.add("0")
+                chars.add("1")
             }
             val number = chars.joinToString(separator = "")
             if (i in 1..3) {
