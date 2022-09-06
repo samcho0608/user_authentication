@@ -5,8 +5,8 @@ import com.samcho.user_authentication.domain.user.phone_number.PhoneNumber
 
 interface AppUserDetail {
     val id: String
-    var nicknm: String
-    var email: EmailAddress
-    var name: String
-    var phone: PhoneNumber
+    val nicknm: String
+    val email: EmailAddress
+    val name: String
+    val phone: PhoneNumber
 }
