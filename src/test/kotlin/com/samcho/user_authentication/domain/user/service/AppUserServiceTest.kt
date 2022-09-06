@@ -2,7 +2,7 @@ package com.samcho.user_authentication.domain.user.service
 
 import com.samcho.user_authentication.data.user.MemoryAppUserRepository
 import com.samcho.user_authentication.domain.user.AppUser
-import com.samcho.user_authentication.domain.user.UserNotFoundException
+import com.samcho.user_authentication.domain.user.AppUserNotFoundException
 import com.samcho.user_authentication.domain.user.email_address.EmailAddress
 import com.samcho.user_authentication.domain.user.phone_number.PhoneNumber
 import org.junit.jupiter.api.AfterEach
@@ -38,7 +38,7 @@ internal class AppUserServiceTest {
 
     @Test
     fun findUserDetailUserDoesNotExists() {
-        assertThrows(UserNotFoundException::class.java) {
+        assertThrows(AppUserNotFoundException::class.java) {
 
             appUserService.findUserDetail(AppUser().apply { id = "USER_ID" })
         }
@@ -70,7 +70,7 @@ internal class AppUserServiceTest {
     fun resetPasswordUserDoesNotExist() {
         val newPassword = "new password"
 
-        assertThrows(UserNotFoundException::class.java) {
+        assertThrows(AppUserNotFoundException::class.java) {
 
             appUserService.resetPassword(AppUser().apply { id = "USER_ID" }, newPassword)
         }
