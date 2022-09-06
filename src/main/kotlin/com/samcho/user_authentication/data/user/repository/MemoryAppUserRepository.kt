@@ -7,6 +7,9 @@ import com.samcho.user_authentication.domain.user.phone_number.PhoneNumber
 import com.samcho.user_authentication.domain.user.repository.AppUserRepository
 
 class MemoryAppUserRepository : AppUserRepository {
+    override fun existsById(id: String): Boolean =
+        userDB.containsKey(id)
+
     override fun findById(id: String): AppUser? = userDB[id]
 
     override fun findAppUserDetailById(id: String): AppUserDetail? {
