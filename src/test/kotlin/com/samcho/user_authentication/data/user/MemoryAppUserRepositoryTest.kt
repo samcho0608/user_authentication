@@ -82,6 +82,78 @@ internal class MemoryAppUserRepositoryTest {
     }
 
     @Test
+    fun findByEmail() {
+        val user = AppUser().apply {
+            email = EmailAddress("hgd1234@gmail.com")
+            name = "홍길동"
+            nicknm = "요리번쩍조리번쩍"
+            password = "hongGilDong1234"
+            phoneNumber = PhoneNumber(
+                "821012341234"
+            )
+        }
+
+        userRepo.save(user)
+
+        val foundUser = userRepo.findByEmail(user.email!!.emailAddress)
+
+        assertNotEquals(null, foundUser)
+        assertEquals(user.id, foundUser!!.id)
+        assertEquals(user.nicknm, foundUser.nicknm)
+        assertEquals(user.email, foundUser.email)
+        assertEquals(user.phoneNumber, foundUser.phoneNumber)
+        assertEquals(user.name, foundUser.name)
+    }
+
+    @Test
+    fun findByPhoneNumber() {
+        val user = AppUser().apply {
+            email = EmailAddress("hgd1234@gmail.com")
+            name = "홍길동"
+            nicknm = "요리번쩍조리번쩍"
+            password = "hongGilDong1234"
+            phoneNumber = PhoneNumber(
+                "821012341234"
+            )
+        }
+
+        userRepo.save(user)
+
+        val foundUser = userRepo.findByPhoneNumber(user.phoneNumber!!.phoneNumber)
+
+        assertNotEquals(null, foundUser)
+        assertEquals(user.id, foundUser!!.id)
+        assertEquals(user.nicknm, foundUser.nicknm)
+        assertEquals(user.email, foundUser.email)
+        assertEquals(user.phoneNumber, foundUser.phoneNumber)
+        assertEquals(user.name, foundUser.name)
+    }
+
+    @Test
+    fun findAppUserDetailByNicknm() {
+        val user = AppUser().apply {
+            email = EmailAddress("hgd1234@gmail.com")
+            name = "홍길동"
+            nicknm = "요리번쩍조리번쩍"
+            password = "hongGilDong1234"
+            phoneNumber = PhoneNumber(
+                "821012341234"
+            )
+        }
+
+        userRepo.save(user)
+
+        val foundUser = userRepo.findByNicknm(user.nicknm)
+
+        assertNotEquals(null, foundUser)
+        assertEquals(user.id, foundUser!!.id)
+        assertEquals(user.nicknm, foundUser.nicknm)
+        assertEquals(user.email, foundUser.email)
+        assertEquals(user.phoneNumber, foundUser.phoneNumber)
+        assertEquals(user.name, foundUser.name)
+    }
+
+    @Test
     fun findAppUserDetailByIdNotFound() {
         val foundUser = userRepo.findAppUserDetailById("USER_ID")
         assertEquals(null, foundUser)
@@ -107,6 +179,5 @@ internal class MemoryAppUserRepositoryTest {
         val targetUser = userRepo.findById(savedUser.id!!)
 
         assertEquals(newPassword, targetUser!!.password)
-
     }
 }
