@@ -32,6 +32,10 @@ class AppUserService(
     fun signUp(user: AppUser): AppUser =
         appUserRepository.save(user)
 
+    fun logIn(user: AppUser): AppUser {
+        TODO("not implemented yet")
+    }
+
     fun resetPassword(user: AppUser, newPassword: String) {
         if(!appUserRepository.existsById(user.id!!)) {
             throw AppUserNotFoundException()
