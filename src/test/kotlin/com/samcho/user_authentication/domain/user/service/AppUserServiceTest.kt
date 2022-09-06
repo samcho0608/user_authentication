@@ -1,6 +1,6 @@
 package com.samcho.user_authentication.domain.user.service
 
-import com.samcho.user_authentication.data.user.repository.MemoryAppUserRepository
+import com.samcho.user_authentication.data.user.MemoryAppUserRepository
 import com.samcho.user_authentication.domain.user.AppUser
 import com.samcho.user_authentication.domain.user.UserNotFoundException
 import com.samcho.user_authentication.domain.user.email_address.EmailAddress

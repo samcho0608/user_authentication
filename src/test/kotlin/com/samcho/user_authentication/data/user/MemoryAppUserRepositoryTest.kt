@@ -1,4 +1,4 @@
-package com.samcho.user_authentication.data.user.repository
+package com.samcho.user_authentication.data.user
 
 import com.samcho.user_authentication.domain.user.AppUser
 import com.samcho.user_authentication.domain.user.email_address.EmailAddress
