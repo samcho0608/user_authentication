@@ -8,7 +8,7 @@ data class PhoneNumber(
 ) {
     init {
         if(!Regex("^[1-9]\\d{1,14}$").matches(phoneNumber)) {
-            throw InvalidPhoneNumberException()
+            throw InvalidPhoneNumberFormatException()
         }
     }
 }

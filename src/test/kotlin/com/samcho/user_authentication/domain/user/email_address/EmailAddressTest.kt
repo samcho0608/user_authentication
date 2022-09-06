@@ -7,12 +7,12 @@ internal class EmailAddressTest {
 
     // At Sign Test
     /**
-     * `@`가 없을 경우, [InvalidEmailAddressException] 오류 처리 확인
+     * `@`가 없을 경우, [InvalidEmailAddressFormatException] 오류 처리 확인
      */
     @Test
     fun testAnEmailWithoutAtSign() {
         val invalidEmail = "samcho9968gmail.com"
-        assertThrows(InvalidEmailAddressException::class.java) {
+        assertThrows(InvalidEmailAddressFormatException::class.java) {
             EmailAddress(invalidEmail)
         }
     }
@@ -20,56 +20,56 @@ internal class EmailAddressTest {
     // Local Part Test
 
     /**
-     * Local Part가 없을 경우, [InvalidEmailAddressException] 오류 처리 확인
+     * Local Part가 없을 경우, [InvalidEmailAddressFormatException] 오류 처리 확인
      */
     @Test
     fun testAnEmailWithNonAlphanumericLanguageLocal() {
         val invalidEmail = "조성민@gmail.com"
-        assertThrows(InvalidEmailAddressException::class.java) {
+        assertThrows(InvalidEmailAddressFormatException::class.java) {
             EmailAddress(invalidEmail)
         }
     }
 
     /**
-     * Local Part가 없을 경우, [InvalidEmailAddressException] 오류 처리 확인
+     * Local Part가 없을 경우, [InvalidEmailAddressFormatException] 오류 처리 확인
      */
     @Test
     fun testAnEmailWithoutLocalPart() {
         val invalidEmail = "@gmail.com"
-        assertThrows(InvalidEmailAddressException::class.java) {
+        assertThrows(InvalidEmailAddressFormatException::class.java) {
             EmailAddress(invalidEmail)
         }
     }
 
     /**
-     * Local Part에 .이 연속으로 두번 있을 경우, [InvalidEmailAddressException] 오류 처리 확인
+     * Local Part에 .이 연속으로 두번 있을 경우, [InvalidEmailAddressFormatException] 오류 처리 확인
      */
     @Test
     fun testAnEmailWithConsecutiveDotsInLocalPart() {
         val invalidEmail = "samcho..9968@gmail.com"
-        assertThrows(InvalidEmailAddressException::class.java) {
+        assertThrows(InvalidEmailAddressFormatException::class.java) {
             EmailAddress(invalidEmail)
         }
     }
 
     /**
-     * Local Part 맨 앞에 .이 있을 경우, [InvalidEmailAddressException] 오류 처리 확인
+     * Local Part 맨 앞에 .이 있을 경우, [InvalidEmailAddressFormatException] 오류 처리 확인
      */
     @Test
     fun testAnEmailWithDotAtTheBeginningOfLocalPart() {
         val invalidEmail = "samcho..9968@gmail.com"
-        assertThrows(InvalidEmailAddressException::class.java) {
+        assertThrows(InvalidEmailAddressFormatException::class.java) {
             EmailAddress(invalidEmail)
         }
     }
 
     /**
-     * Local Part 맨 뒤에 .이 있을 경우, [InvalidEmailAddressException] 오류 처리 확인
+     * Local Part 맨 뒤에 .이 있을 경우, [InvalidEmailAddressFormatException] 오류 처리 확인
      */
     @Test
     fun testAnEmailWithDotAtTheEndOfLocalPart() {
         val invalidEmail = "samcho.9968.@gmail.com"
-        assertThrows(InvalidEmailAddressException::class.java) {
+        assertThrows(InvalidEmailAddressFormatException::class.java) {
             EmailAddress(invalidEmail)
         }
     }
@@ -87,23 +87,23 @@ internal class EmailAddressTest {
     // Domain Part Test
 
     /**
-     * Domain Part 전체가 없을 경우, [InvalidEmailAddressException] 오류 처리 확인
+     * Domain Part 전체가 없을 경우, [InvalidEmailAddressFormatException] 오류 처리 확인
      */
     @Test
     fun testAnEmailWithoutDomainPart() {
         val invalidEmail = "samcho9968@"
-        assertThrows(InvalidEmailAddressException::class.java) {
+        assertThrows(InvalidEmailAddressFormatException::class.java) {
             EmailAddress(invalidEmail)
         }
     }
 
     /**
-     * Domain name이 없을 경우, [InvalidEmailAddressException] 오류 처리 확인
+     * Domain name이 없을 경우, [InvalidEmailAddressFormatException] 오류 처리 확인
      */
     @Test
     fun testAnEmailWithoutDomainName() {
         val invalidEmail = "samcho9968@.com"
-        assertThrows(InvalidEmailAddressException::class.java) {
+        assertThrows(InvalidEmailAddressFormatException::class.java) {
             EmailAddress(invalidEmail)
         }
     }
@@ -119,23 +119,23 @@ internal class EmailAddressTest {
     }
 
     /**
-     * Domain TLD이 없을 경우, [InvalidEmailAddressException] 오류 처리 확인
+     * Domain TLD이 없을 경우, [InvalidEmailAddressFormatException] 오류 처리 확인
      */
     @Test
     fun testAnEmailWithoutDomainSuffix() {
         val invalidEmail = "samcho9968@gmail"
-        assertThrows(InvalidEmailAddressException::class.java) {
+        assertThrows(InvalidEmailAddressFormatException::class.java) {
             EmailAddress(invalidEmail)
         }
     }
 
     /**
-     * Domain에 알파벳이나 숫자가 아닌 언어가 있을 경우, [InvalidEmailAddressException] 오류 처리 확인
+     * Domain에 알파벳이나 숫자가 아닌 언어가 있을 경우, [InvalidEmailAddressFormatException] 오류 처리 확인
      */
     @Test
     fun testNonAlphanumericLanguageDomain() {
         val invalidEmail = "samcho9968@네이버.com"
-        assertThrows(InvalidEmailAddressException::class.java) {
+        assertThrows(InvalidEmailAddressFormatException::class.java) {
             EmailAddress(invalidEmail)
         }
     }

@@ -18,7 +18,7 @@ internal class PhoneNumberTest {
     fun testNonNumericPhoneNumber() {
         val number = "A8212341234"
 
-        assertThrows(InvalidPhoneNumberException::class.java) {
+        assertThrows(InvalidPhoneNumberFormatException::class.java) {
             PhoneNumber(number)
         }
     }
@@ -27,7 +27,7 @@ internal class PhoneNumberTest {
     fun testZeroAtTheBeginningPhoneNumber() {
         val number = "08212341234"
 
-        assertThrows(InvalidPhoneNumberException::class.java) {
+        assertThrows(InvalidPhoneNumberFormatException::class.java) {
             PhoneNumber(number)
         }
     }
@@ -45,7 +45,7 @@ internal class PhoneNumberTest {
             if (number.length in 2..15) {
                 assertEquals(number, PhoneNumber(number).phoneNumber)
             } else {
-                assertThrows(InvalidPhoneNumberException::class.java) {
+                assertThrows(InvalidPhoneNumberFormatException::class.java) {
                     PhoneNumber(number)
                 }
             }
@@ -53,7 +53,7 @@ internal class PhoneNumberTest {
 
         val number = "A8212341234"
 
-        assertThrows(InvalidPhoneNumberException::class.java) {
+        assertThrows(InvalidPhoneNumberFormatException::class.java) {
             PhoneNumber(number)
         }
     }

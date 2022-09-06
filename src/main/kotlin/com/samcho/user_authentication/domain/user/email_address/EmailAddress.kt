@@ -2,7 +2,7 @@ package com.samcho.user_authentication.domain.user.email_address
 
 /**
  * 이메일 주소를 저장하는 VO
- * @throws InvalidEmailAddressException 이메일 주소값의 형식이 유효하지 않을 경우, 예외 처리
+ * @throws InvalidEmailAddressFormatException 이메일 주소값의 형식이 유효하지 않을 경우, 예외 처리
  */
 data class EmailAddress(
     val emailAddress: String,
@@ -12,11 +12,11 @@ data class EmailAddress(
 
         // email 주소 최대 길이는 320
         if(emailAddress.length > 320) {
-            throw InvalidEmailAddressException()
+            throw InvalidEmailAddressFormatException()
         }
 
         if(!Regex(emailPattern).matches(emailAddress)) {
-            throw InvalidEmailAddressException()
+            throw InvalidEmailAddressFormatException()
         }
     }
 
