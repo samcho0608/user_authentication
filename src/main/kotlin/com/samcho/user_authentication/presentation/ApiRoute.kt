@@ -9,5 +9,6 @@ abstract class ApiRoute {
         const val VERIFICATIONS = "/verifications"
         const val PHONE_VERIFICATIONS = "/verifications/phones"
         const val VERIFY_PHONE_VERIFICATIONS = "/verifications/phones/verify"
+        const val REFRESH_TOKEN = "/users/refresh-token"
     }
 }
