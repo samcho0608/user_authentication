@@ -1,10 +1,8 @@
 package com.samcho.user_authentication.domain.user.service
 
 import com.samcho.user_authentication.data.user.MemoryAppUserRepository
-import com.samcho.user_authentication.domain.core.exception.NotEnoughArgumentException
 import com.samcho.user_authentication.domain.user.AppUser
 import com.samcho.user_authentication.domain.user.AppUserNotFoundException
-import com.samcho.user_authentication.domain.user.LogInFailureException
 import com.samcho.user_authentication.domain.user.email_address.EmailAddress
 import com.samcho.user_authentication.domain.user.phone_number.PhoneNumber
 import org.junit.jupiter.api.AfterEach
