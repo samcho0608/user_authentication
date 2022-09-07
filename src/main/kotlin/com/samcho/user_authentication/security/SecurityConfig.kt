@@ -1,6 +1,7 @@
 package com.samcho.user_authentication.security
 
 import com.samcho.user_authentication.domain.core.util.JwtFactory
+import com.samcho.user_authentication.presentation.ApiRoute
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.security.authentication.AuthenticationManager
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 
 @EnableWebSecurity
@@ -45,22 +47,24 @@ class SecurityConfig @Autowired constructor(
     @Bean
     fun filterChain(http : HttpSecurity, authManager : AuthenticationManager) : SecurityFilterChain {
         val userAuthFilter = UserAuthFilter(authManager, jwtFactory)
-        userAuthFilter.setFilterProcessesUrl("/users/log-in")
+        userAuthFilter.setFilterProcessesUrl(ApiRoute.LOG_IN)
         http.csrf()
             .disable()
             .authorizeRequests()
-            .antMatchers("/users/mine/**").authenticated()
-            .antMatchers("/users/log-in/**").permitAll()
+            .antMatchers("${ApiRoute.USERS_MINE}/**").authenticated()
+            .antMatchers("${ApiRoute.VERIFICATIONS}/**").permitAll()
+            .antMatchers("${ApiRoute.LOG_IN}/**").permitAll()
             .and()
             .httpBasic()
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .addFilter(userAuthFilter)
+            .addFilterBefore(AuthTokenFilter(jwtFactory), UsernamePasswordAuthenticationFilter::class.java)
 
         http.authorizeRequests()
             .anyRequest()
-            .permitAll()
+            .denyAll()
 
         return http.build()
     }

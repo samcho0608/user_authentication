@@ -15,8 +15,9 @@ class JwtFactory @Autowired constructor(
     @Value("\${user-auth.issuer}")
     private val issuer: String,
 ) {
+
+    val algorithm : Algorithm= Algorithm.HMAC256(serverSecret)
     fun createToken(sub : String, exp: Date, payload : Map<String, Any>? = null): String {
-        val algo = Algorithm.HMAC256(serverSecret)
         val jwtBuilder = JWT.create()
             .withSubject(sub)
             .withExpiresAt(exp)
@@ -28,6 +29,6 @@ class JwtFactory @Autowired constructor(
         }
 
         return jwtBuilder
-            .sign(algo)
+            .sign(algorithm)
     }
 }
