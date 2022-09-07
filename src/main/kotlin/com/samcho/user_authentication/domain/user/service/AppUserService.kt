@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service
 @Service
 class AppUserService @Autowired constructor(
     private val appUserRepository: AppUserRepository,
-    private val bCryptPasswordEncoder: PasswordEncoder,
+    private val passwordEncoder: PasswordEncoder,
 ) : UserDetailsService {
 
     private fun validateIdSpecifiedAppUser(user: AppUser) {
@@ -93,7 +93,7 @@ class AppUserService @Autowired constructor(
      */
     fun signUp(user: AppUser): AppUser =
         appUserRepository.save(user.apply {
-            password = bCryptPasswordEncoder.encode(password)
+            password = passwordEncoder.encode(password)
         })
 
     /**
@@ -110,7 +110,9 @@ class AppUserService @Autowired constructor(
         if(!appUserRepository.existsByPhoneNumber(user.phoneNumber!!.phoneNumber)) {
             throw AppUserNotFoundException()
         }
-        appUserRepository.updatePasswordById(user.id!!, newPassword)
+
+        val foundUser = appUserRepository.findAppUserDetailByPhoneNumber(user.phoneNumber!!.phoneNumber)
+        appUserRepository.updatePasswordById(foundUser!!.id, passwordEncoder.encode(newPassword))
     }
     override fun loadUserByUsername(username: String?): UserDetails {
         username ?: throw NotEnoughArgumentException()
