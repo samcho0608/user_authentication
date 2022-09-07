@@ -50,6 +50,8 @@ internal class VerificationServiceTest {
         assertDoesNotThrow {
             verificationService.verifyVerification(verification)
         }
+
+        assertEquals(null, verificationRepository.findById(verification.verificationChannel))
     }
 
     @Test
