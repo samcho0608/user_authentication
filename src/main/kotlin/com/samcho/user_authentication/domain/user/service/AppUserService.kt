@@ -83,7 +83,12 @@ class AppUserService @Autowired constructor(
             appUserRepository.findByEmail(username).also {
                 logger().info(it.toString())
             }
-        } else { // 닉네임으로 간주
+        } else { // 닉네임 혹은 User ID로 간주
+            // ID 검색이 속도가 더 빠름
+            appUserRepository.findById(username).also {
+                logger().info(it.toString())
+            }
+                ?:
             appUserRepository.findByNicknm(username).also {
                 logger().info(it.toString())
             }
