@@ -14,8 +14,8 @@ import java.time.Instant
  * @param verificationCode [verificationChannel]로 보낼 인증 번호
  * @param expiration 만료일
  */
-data class Verification<T : Contact> (
-    val verificationChannel: T,
+data class Verification (
+    val verificationChannel: Contact,
     val verificationCode : VerificationCode,
     val expiration : Timestamp,
 ) {

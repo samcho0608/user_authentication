@@ -3,9 +3,9 @@ package com.samcho.user_authentication.domain.verification
 import com.samcho.user_authentication.domain.core.vo.Contact
 
 interface VerificationRepository {
-    fun <T: Contact>save(verification: Verification<T>) : Verification<T>
+    fun save(verification: Verification) : Verification
 
-    fun <T: Contact>delete(verification: Verification<T>)
+    fun delete(verification: Verification)
 
-    fun <T: Contact>findById(id: T) : Verification<T>?
+    fun findById(id: Contact) : Verification?
 }
