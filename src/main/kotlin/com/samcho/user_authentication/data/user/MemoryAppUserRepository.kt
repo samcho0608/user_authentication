@@ -18,9 +18,7 @@ class MemoryAppUserRepository : AppUserRepository {
 
     override fun findById(id: String): AppUser? = userDB[id]
 
-    override fun findAppUserDetailById(id: String): AppUserDetail? {
-        val user = userDB[id] ?: return null
-
+    private fun appUserToAppUserDetail(user : AppUser): AppUserDetail {
         return object : AppUserDetail {
             override val id: String
                 get() = user.id!!
@@ -33,6 +31,38 @@ class MemoryAppUserRepository : AppUserRepository {
             override val phoneNumber: PhoneNumber
                 get() = user.phoneNumber!!
         }
+    }
+
+    override fun findAppUserDetailById(id: String): AppUserDetail? {
+        val user = userDB[id] ?: return null
+        return appUserToAppUserDetail(user)
+    }
+
+    override fun findAppUserDetailByEmail(email: String): AppUserDetail? {
+        val user = userDB
+            .values
+            .find { it.email != null && it.email!!.emailAddress == email }
+            ?: return null
+
+        return appUserToAppUserDetail(user)
+    }
+
+    override fun findAppUserDetailByNicknm(nicknm: String): AppUserDetail? {
+        val user = userDB
+            .values
+            .find { it.nicknm == nicknm }
+            ?: return null
+
+        return appUserToAppUserDetail(user)
+    }
+
+    override fun findAppUserDetailByPhoneNumber(phoneNumber: String): AppUserDetail? {
+        val user = userDB
+            .values
+            .find { it.phoneNumber != null && it.phoneNumber!!.phoneNumber == phoneNumber }
+            ?: return null
+
+        return appUserToAppUserDetail(user)
     }
 
     override fun findByEmail(email: String): AppUser? =

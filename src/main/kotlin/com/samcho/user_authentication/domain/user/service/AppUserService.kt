@@ -33,11 +33,27 @@ class AppUserService @Autowired constructor(
 
     /**
      * 특정 한 유저 민감하지 않은 정보를 불러오는 함수.
-     * @param user 검색할 대상이 되는 유저. 해당 유저의 id값을 기준으로 검색함.
+     * @param username 검색할 대상이 되는 유저의 식별자. 해당 유저의 id값을 기준으로 검색함.
      */
-    fun findUserDetail(user: AppUser): AppUserDetail {
-        validateIdSpecifiedAppUser(user)
-        return appUserRepository.findAppUserDetailById(user.id!!) ?: throw AppUserNotFoundException()
+    fun findUserDetail(username: String): AppUserDetail {
+        return (if(PhoneNumber.isInPhoneNumberFormat(username)) {
+            appUserRepository.findAppUserDetailByPhoneNumber(username).also {
+                logger().info(it.toString())
+            }
+        } else if(EmailAddress.isInEmailAddressFormat(username)) {
+            appUserRepository.findAppUserDetailByEmail(username).also {
+                logger().info(it.toString())
+            }
+        } else { // 닉네임 혹은 User ID로 간주
+            // ID 검색이 속도가 더 빠름
+            appUserRepository.findAppUserDetailById(username).also {
+                logger().info(it.toString())
+            }
+                ?:
+                appUserRepository.findAppUserDetailByNicknm(username).also {
+                    logger().info(it.toString())
+                }
+        }) ?: throw AppUserNotFoundException()
     }
 
     /**

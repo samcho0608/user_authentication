@@ -59,9 +59,7 @@ class UserController @Autowired constructor(
         return try {
 
             val user = appUserService.findUserDetail(
-                AppUser(
-                    id = principal.name
-                )
+                principal.name
             )
             ResponseEntity
                 .ok()
@@ -181,7 +179,7 @@ class UserController @Autowired constructor(
             } catch (e: JWTVerificationException) {
                 logger().error("Access Token Denied : ${e.message}")
                 ResponseEntity
-                    .badRequest()
+                    .status(HttpStatus.FORBIDDEN)
                     .body(
                         ErrorResponseBody(
                             code = HttpStatus.FORBIDDEN.name,
@@ -192,6 +190,7 @@ class UserController @Autowired constructor(
                     )
             } catch (e: Exception) {
                 logger().error("Bad Request : ${e.message}")
+                logger().debug("Bad Request : ${e.stackTrace}")
                 ResponseEntity
                     .badRequest()
                     .body(
@@ -229,9 +228,9 @@ class UserController @Autowired constructor(
                 return errorResponse
             }
             try {
-                val id: String? = decodeSubject(this)
+                val username: String? = decodeSubject(this)
 
-                val user = appUserService.findUser(AppUser(id=id))
+                val user = appUserService.findUser(username!!)
 
                 val accessToken = jwtFactory.createToken(
                     user.id!!,
@@ -243,7 +242,7 @@ class UserController @Autowired constructor(
                     .body(
                         SuccessResponseBody().apply {
                             this.status = HttpStatus.OK
-                            this.message = "Successfully reset password"
+                            this.message = "Successfully refreshed access token"
                             this.data = mapOf(
                                 "accessToken" to accessToken
                             )
