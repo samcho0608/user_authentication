@@ -18,6 +18,9 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import java.sql.Timestamp
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -29,7 +32,7 @@ internal class VerificationControllerTest @Autowired constructor(
     @Test
     fun sendVerification() {
         mockMvc.perform(
-            post("/verifications/phone",)
+            post("/verifications/phones",)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
                     jacksonObjectMapper().writeValueAsString(
@@ -46,23 +49,24 @@ internal class VerificationControllerTest @Autowired constructor(
     }
 
     @Test
-    fun verifyVerification() {
+    fun verifyPhoneVerification() {
         val generatedCode = VerificationCodeGenerator.generateVerificationCode()
 
         val verification = Verification().apply {
             verificationChannel = PhoneNumber("821084273267")
             verificationCode = generatedCode
+            expiration = Timestamp.from(Instant.now().plus(10, ChronoUnit.MINUTES))
         }
         verificationService.createVerification(verification = verification)
 
 
         mockMvc.perform(
-            post("/verifications/verify",)
+            post("/verifications/phones/verify",)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
                     jacksonObjectMapper().writeValueAsString(
                         mapOf(
-                            "verificationCode" to generatedCode,
+                            "verificationCode" to generatedCode.code,
                             "countryCode" to "82",
                             "phoneNumber" to "1084273267"
                         )
@@ -71,6 +75,7 @@ internal class VerificationControllerTest @Autowired constructor(
         )
             .andDo { logger().debug("RECEIVED REQUEST : ${it.request.contentAsString}") }
             .andExpect(status().isOk)
+            .andDo { logger().info("RECEIVED RESPONSE : ${it.response.contentAsString}") }
             .andExpect(content().string(containsString("Success")))
     }
 }

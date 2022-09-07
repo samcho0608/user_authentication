@@ -17,6 +17,7 @@ repositories {
 
 dependencies {
 	implementation("net.nurigo:sdk:4.2.4")
+	implementation("com.auth0:java-jwt:3.18.1")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
