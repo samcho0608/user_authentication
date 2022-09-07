@@ -21,14 +21,14 @@ class VerificationService @Autowired constructor(
             throw NotEnoughArgumentException()
         }
 
-        val foundVerification = verificationRepository.findById(verification.verificationChannel)
+        val foundVerification = verificationRepository.findById(verification.verificationChannel!!)
             ?: throw VerificationFailureException("Verification not found")
 
-        if(verification.verificationCode.code != foundVerification.verificationCode!!.code) {
+        if(verification.verificationCode!!.code != foundVerification.verificationCode!!.code) {
             throw VerificationFailureException("Verification code mismatch")
         }
 
-        if(foundVerification.isExpired()!!) {
+        if(foundVerification.isExpired()) {
             throw VerificationFailureException("Verification expired")
         }
 
@@ -38,6 +38,7 @@ class VerificationService @Autowired constructor(
     /**
      * 새로운 OTP 인증 세션을 생성함
      * @param verification 생성될 OTP 인증 세션에 대한 정보
+     * @throws NotEnoughArgumentException 인증번호와 연락처 둘 중 하나라도 누락될 경우 발생
      */
     fun createVerification(verification : Verification) : Verification {
         if(verification.verificationCode == null || verification.verificationChannel == null) {

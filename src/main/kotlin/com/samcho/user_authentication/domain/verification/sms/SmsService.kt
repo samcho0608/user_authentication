@@ -18,7 +18,7 @@ class SmsService @Autowired constructor(
 ){
 
     /**
-     * @throws SmsFailureException SMS 문자를 보낸 것에 실패하였을때 발생
+     * @throws SmsFailureException SMS 문자를 보내는 것에 실패하였을때 발생
      */
     fun sendVerificationSms(toNumber: String, code: VerificationCode) : SingleMessageSentResponse? {
         val msg = SmsVerificationMessage(
