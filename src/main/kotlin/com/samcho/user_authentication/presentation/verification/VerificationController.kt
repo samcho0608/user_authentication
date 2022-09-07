@@ -59,7 +59,7 @@ class VerificationController @Autowired constructor(
         }
     }
 
-    @PostMapping(ApiRoute.VERIFY_PHONE_VERIFICATIONS)
+    @DeleteMapping(ApiRoute.VERIFY_PHONE_VERIFICATIONS)
     fun verifyPhoneVerification(@RequestBody request: VerifyPhoneVerificationRequest): ResponseEntity<Any>  {
         return try {
             val phoneNumber = request.run { countryCode + phoneNumber }
