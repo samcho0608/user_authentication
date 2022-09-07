@@ -39,10 +39,6 @@ class AuthTokenFilter(
 
         if(request.servletPath in allPermittedRoutes) {
             filterChain.doFilter(request, response)
-        } else if (request.servletPath == ApiRoute.USERS && request.method == "POST") {
-            TODO("Not yet implemented") // 회원가입 전화번호 인증 체크 로직 필요
-        } else if(request.servletPath == ApiRoute.RESET_PASSWORD) {
-            TODO("Not yet implemented") // 비밀번호 재설정 전화번호 인증 체크 로직 필요
         } else {
             request.getHeader(AUTHORIZATION)?.run {
                 if(startsWith("Bearer ")) {
