@@ -10,11 +10,12 @@ import com.samcho.user_authentication.domain.user.phone_number.PhoneNumber
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 internal class AppUserServiceTest {
 
     private val appUserRepository = MemoryAppUserRepository()
-    private val appUserService = AppUserService(appUserRepository)
+    private val appUserService = AppUserService(appUserRepository, BCryptPasswordEncoder())
 
     @AfterEach
     fun afterEach() {

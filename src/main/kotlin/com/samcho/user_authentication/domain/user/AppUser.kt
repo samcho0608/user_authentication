@@ -23,7 +23,7 @@ class AppUser(
      */
     var name: String = "",
     /**
-     * 비밀번호. TODO:: BCrypt로 암호화
+     * 비밀번호.
      */
     var password: String = "",
     /**

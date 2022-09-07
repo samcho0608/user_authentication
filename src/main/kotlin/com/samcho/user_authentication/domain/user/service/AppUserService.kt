@@ -5,8 +5,15 @@ import com.samcho.user_authentication.domain.user.AppUser
 import com.samcho.user_authentication.domain.user.AppUserDetail
 import com.samcho.user_authentication.domain.user.AppUserNotFoundException
 import com.samcho.user_authentication.domain.user.LogInFailureException
+import com.samcho.user_authentication.domain.user.email_address.EmailAddress
+import com.samcho.user_authentication.domain.user.phone_number.PhoneNumber
 import com.samcho.user_authentication.domain.user.repository.AppUserRepository
+import com.samcho.user_authentication.domain.core.util.logger
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.userdetails.User
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 /**
@@ -14,8 +21,9 @@ import org.springframework.stereotype.Service
  */
 @Service
 class AppUserService @Autowired constructor(
-    private val appUserRepository: AppUserRepository
-) {
+    private val appUserRepository: AppUserRepository,
+    private val bCryptPasswordEncoder: PasswordEncoder,
+) : UserDetailsService {
 
     private fun validateIdSpecifiedAppUser(user: AppUser) {
         if(user.id == null) {
@@ -47,7 +55,9 @@ class AppUserService @Autowired constructor(
      * @param user 회원가입 시 등록될 유저 정보
      */
     fun signUp(user: AppUser): AppUser =
-        appUserRepository.save(user)
+        appUserRepository.save(user.apply {
+            password = bCryptPasswordEncoder.encode(password)
+        })
 
     /**
      * @param user 로그인 시 필요한 유저 식별 정보. 비밀번호와 email/nicknm/phoneNumber 3 값 중 하나는 포함되어야함.
@@ -70,7 +80,7 @@ class AppUserService @Autowired constructor(
             })
                 ?: throw AppUserNotFoundException()
 
-        if(loggedInUser.password != user.password) {
+        if(loggedInUser.password != bCryptPasswordEncoder.encode(user.password)) {
             throw LogInFailureException()
         }
 
@@ -90,5 +100,28 @@ class AppUserService @Autowired constructor(
             throw AppUserNotFoundException()
         }
         appUserRepository.updatePasswordById(user.id!!, newPassword)
+    }
+    override fun loadUserByUsername(username: String?): UserDetails {
+        username ?: throw NotEnoughArgumentException()
+
+        val appUser = (if(PhoneNumber.isInPhoneNumberFormat(username)) {
+            appUserRepository.findByPhoneNumber(username).also {
+                logger().info(it.toString())
+            }
+        } else if(EmailAddress.isInEmailAddressFormat(username)) {
+            appUserRepository.findByEmail(username).also {
+                logger().info(it.toString())
+            }
+        } else { // 닉네임으로 간주
+            appUserRepository.findByNicknm(username).also {
+                logger().info(it.toString())
+            }
+        }) ?: throw AppUserNotFoundException()
+
+        return User(
+            appUser.nicknm,
+            appUser.password,
+            mutableListOf() // GrantedAuthorities
+        )
     }
 }
