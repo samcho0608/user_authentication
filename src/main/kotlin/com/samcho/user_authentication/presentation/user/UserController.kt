@@ -156,52 +156,50 @@ class UserController @Autowired constructor(
             if(errorResponse != null) {
                 return errorResponse
             }
+            try {
+                val phoneNumber: String? = decodeSubject(this)
 
-            val phoneNumber: String? = decodeSubject(this)
-
-            appUserService.resetPassword(
-                AppUser(
-                    phoneNumber = PhoneNumber(phoneNumber!!)
-                ),
-                newPassword = request.newPassword
-            )
-
-            ResponseEntity
-                .ok()
-                .body(
-                    SuccessResponseBody().apply {
-                        this.status = HttpStatus.OK
-                        this.message = "Successfully reset password"
-                    }
+                appUserService.resetPassword(
+                    AppUser(
+                        phoneNumber = PhoneNumber(phoneNumber!!)
+                    ),
+                    newPassword = request.newPassword
                 )
-//            try {
-//
-//            } catch (e: JWTVerificationException) {
-//                logger().error("Access Token Denied : ${e.message}")
-//                ResponseEntity
-//                    .status(HttpStatus.FORBIDDEN)
-//                    .body(
-//                        ErrorResponseBody(
-//                            code = HttpStatus.FORBIDDEN.name,
-//                            status = HttpStatus.FORBIDDEN.value(),
-//                            error = e.message,
-//                            message = "Access Token Denied"
-//                        )
-//                    )
-//            } catch (e: Exception) {
-//                logger().error("Bad Request : ${e.message}")
-//                logger().debug("Bad Request : ${e.stackTrace}")
-//                ResponseEntity
-//                    .badRequest()
-//                    .body(
-//                        ErrorResponseBody(
-//                            code = HttpStatus.BAD_REQUEST.name,
-//                            status = HttpStatus.BAD_REQUEST.value(),
-//                            error = e.message,
-//                            message = "Bad Request : ${e.message}"
-//                        )
-//                    )
-//            }
+
+                ResponseEntity
+                    .ok()
+                    .body(
+                        SuccessResponseBody().apply {
+                            this.status = HttpStatus.OK
+                            this.message = "Successfully reset password"
+                        }
+                    )
+            } catch (e: JWTVerificationException) {
+                logger().error("Access Token Denied : ${e.message}")
+                ResponseEntity
+                    .status(HttpStatus.FORBIDDEN)
+                    .body(
+                        ErrorResponseBody(
+                            code = HttpStatus.FORBIDDEN.name,
+                            status = HttpStatus.FORBIDDEN.value(),
+                            error = e.message,
+                            message = "Access Token Denied"
+                        )
+                    )
+            } catch (e: Exception) {
+                logger().error("Bad Request : ${e.message}")
+                logger().debug("Bad Request : ${e.stackTrace}")
+                ResponseEntity
+                    .badRequest()
+                    .body(
+                        ErrorResponseBody(
+                            code = HttpStatus.BAD_REQUEST.name,
+                            status = HttpStatus.BAD_REQUEST.value(),
+                            error = e.message,
+                            message = "Bad Request : ${e.message}"
+                        )
+                    )
+            }
         }
     }
 
