@@ -5,4 +5,4 @@ package com.samcho.user_authentication.domain.core.exception
  * 예 :
  * * 로그인 시 비밀번호가 제공되지 않음
  */
-class NotEnoughArgumentException : Exception("Not enough arguments")
+class NotEnoughArgumentException : IllegalArgumentException("Not enough arguments")
