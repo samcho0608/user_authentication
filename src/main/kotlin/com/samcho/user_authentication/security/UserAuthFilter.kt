@@ -13,9 +13,6 @@ import org.springframework.security.core.userdetails.User
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.util.StreamUtils
 import java.nio.charset.StandardCharsets
-import java.security.SecureRandom
-import java.time.Instant
-import java.time.temporal.ChronoUnit
 import java.util.*
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
@@ -64,6 +61,10 @@ class UserAuthFilter constructor(
         val user = (authResult?.principal
                     ?: throw AuthenticationServiceException("Authentication Result Null")
                 ) as User
+
+//        val appUser = user.findUser(
+//            user.username
+//        )
 
         val accessToken = jwtFactory.createToken(
             user.username,

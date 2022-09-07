@@ -13,6 +13,9 @@ class MemoryAppUserRepository : AppUserRepository {
     override fun existsById(id: String): Boolean =
         userDB.containsKey(id)
 
+    override fun existsByPhoneNumber(phoneNumber: String): Boolean =
+        userDB.values.any { it.phoneNumber != null && it.phoneNumber!!.phoneNumber == phoneNumber }
+
     override fun findById(id: String): AppUser? = userDB[id]
 
     override fun findAppUserDetailById(id: String): AppUserDetail? {

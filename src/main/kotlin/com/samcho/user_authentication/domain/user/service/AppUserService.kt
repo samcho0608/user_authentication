@@ -42,8 +42,30 @@ class AppUserService @Autowired constructor(
 
     /**
      * 특정 한 유저 전체 정보를 불러오는 함수.
-     * @param user 검색할 대상이 되는 유저. 해당 유저의 id값을 기준으로 검색함.
+     * @param username 검색할 대상이 되는 유저의 식별자. 해당 유저의 ID나 전화번호 값을 기준으로 검색함.
+     * @throws AppUserNotFoundException user를 찾지 못했을 경우 발생
      */
+    fun findUser(username: String): AppUser {
+        return (if(PhoneNumber.isInPhoneNumberFormat(username)) {
+            appUserRepository.findByPhoneNumber(username).also {
+                logger().info(it.toString())
+            }
+        } else if(EmailAddress.isInEmailAddressFormat(username)) {
+            appUserRepository.findByEmail(username).also {
+                logger().info(it.toString())
+            }
+        } else { // 닉네임 혹은 User ID로 간주
+            // ID 검색이 속도가 더 빠름
+            appUserRepository.findById(username).also {
+                logger().info(it.toString())
+            }
+                ?:
+                appUserRepository.findByNicknm(username).also {
+                    logger().info(it.toString())
+                }
+        }) ?: throw AppUserNotFoundException()
+    }
+
     fun findUser(user: AppUser): AppUser {
         validateIdSpecifiedAppUser(user)
         return appUserRepository.findById(user.id!!) ?: throw AppUserNotFoundException()
@@ -65,9 +87,11 @@ class AppUserService @Autowired constructor(
      * @throws AppUserNotFoundException 제공된 정보에 일치하는 유저를 찾을 수 없었을때 발생
      */
     fun resetPassword(user: AppUser, newPassword: String) {
-        validateIdSpecifiedAppUser(user)
+        if(user.phoneNumber == null) {
+            throw NotEnoughArgumentException()
+        }
 
-        if(!appUserRepository.existsById(user.id!!)) {
+        if(!appUserRepository.existsByPhoneNumber(user.phoneNumber!!.phoneNumber)) {
             throw AppUserNotFoundException()
         }
         appUserRepository.updatePasswordById(user.id!!, newPassword)
@@ -75,24 +99,7 @@ class AppUserService @Autowired constructor(
     override fun loadUserByUsername(username: String?): UserDetails {
         username ?: throw NotEnoughArgumentException()
 
-        val appUser = (if(PhoneNumber.isInPhoneNumberFormat(username)) {
-            appUserRepository.findByPhoneNumber(username).also {
-                logger().info(it.toString())
-            }
-        } else if(EmailAddress.isInEmailAddressFormat(username)) {
-            appUserRepository.findByEmail(username).also {
-                logger().info(it.toString())
-            }
-        } else { // 닉네임 혹은 User ID로 간주
-            // ID 검색이 속도가 더 빠름
-            appUserRepository.findById(username).also {
-                logger().info(it.toString())
-            }
-                ?:
-            appUserRepository.findByNicknm(username).also {
-                logger().info(it.toString())
-            }
-        }) ?: throw AppUserNotFoundException()
+        val appUser = findUser(username)
 
         return User(
             appUser.nicknm,

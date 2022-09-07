@@ -23,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 // securedEnabled : @Secured annotation을 사용하게 해줌
 // jsr250Enabled : @RoleAllowed annotation을 사용하게 해줌
 class SecurityConfig @Autowired constructor(
-    private val jwtFactory: JwtFactory
+    private val jwtFactory: JwtFactory,
 ) {
 
     @Bean
@@ -54,6 +54,7 @@ class SecurityConfig @Autowired constructor(
             .antMatchers("${ApiRoute.USERS_MINE}/**").authenticated()
             .antMatchers("${ApiRoute.VERIFICATIONS}/**").permitAll()
             .antMatchers("${ApiRoute.LOG_IN}/**").permitAll()
+            .anyRequest().permitAll()
             .and()
             .httpBasic()
             .and()
@@ -61,10 +62,6 @@ class SecurityConfig @Autowired constructor(
             .and()
             .addFilter(userAuthFilter)
             .addFilterBefore(AuthTokenFilter(jwtFactory), UsernamePasswordAuthenticationFilter::class.java)
-
-        http.authorizeRequests()
-            .anyRequest()
-            .denyAll()
 
         return http.build()
     }

@@ -30,6 +30,7 @@ class AuthTokenFilter(
         val allPermittedRoutes = listOf(
             // 유저 Collection 경로
             ApiRoute.LOG_IN,
+            ApiRoute.USERS,
 
             // Verification Collection 경로
             ApiRoute.VERIFICATIONS,
@@ -72,7 +73,6 @@ class AuthTokenFilter(
                         )
                     }
                 }
-
             }
 
             filterChain.doFilter(request, response)
