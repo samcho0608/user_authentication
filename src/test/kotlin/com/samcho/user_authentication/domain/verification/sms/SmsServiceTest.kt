@@ -21,7 +21,7 @@ internal class SmsServiceTest @Autowired constructor(
                 code = VerificationCode("000000")
             )
 
-            assertEquals("200", response!!.statusCode)
+            assertEquals("2000", response!!.statusCode)
 
         } catch (e : Exception) {
 
