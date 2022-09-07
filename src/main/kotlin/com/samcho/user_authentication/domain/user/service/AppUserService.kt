@@ -4,7 +4,6 @@ import com.samcho.user_authentication.domain.core.exception.NotEnoughArgumentExc
 import com.samcho.user_authentication.domain.user.AppUser
 import com.samcho.user_authentication.domain.user.AppUserDetail
 import com.samcho.user_authentication.domain.user.AppUserNotFoundException
-import com.samcho.user_authentication.domain.user.LogInFailureException
 import com.samcho.user_authentication.domain.user.email_address.EmailAddress
 import com.samcho.user_authentication.domain.user.phone_number.PhoneNumber
 import com.samcho.user_authentication.domain.user.repository.AppUserRepository
