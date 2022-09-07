@@ -15,9 +15,11 @@ import com.samcho.user_authentication.presentation.dto.ErrorResponseBody
 import com.samcho.user_authentication.presentation.dto.SuccessResponseBody
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import java.sql.Timestamp
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 import java.util.*
@@ -35,6 +37,7 @@ class VerificationController @Autowired constructor(
             Verification().apply {
                 verificationCode = VerificationCodeGenerator.generateVerificationCode()
                 verificationChannel = PhoneNumber(request.run { countryCode + phoneNumber })
+                expiration = Timestamp.from(Instant.now().plus(5, ChronoUnit.MINUTES))
             }
         )
 
