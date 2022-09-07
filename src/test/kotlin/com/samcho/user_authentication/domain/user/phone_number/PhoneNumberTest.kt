@@ -9,7 +9,7 @@ internal class PhoneNumberTest {
     fun testValidPhoneNumber() {
         val number = "821012341234"
 
-        val phoneNumber = PhoneNumber(phoneNumber = number,)
+        val phoneNumber = PhoneNumber(phoneNumber = number)
 
         assertEquals(number, phoneNumber.phoneNumber)
     }
