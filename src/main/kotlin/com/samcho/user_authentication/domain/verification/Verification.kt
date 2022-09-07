@@ -7,7 +7,6 @@ import java.time.Instant
 
 /**
  * 인증 정보 Entity
- * @param T 인증을 보낼 [Contact] (연락처)의 종류
  * @param verificationChannel [verificationCode]를 받을 타겟.
  *
  * 멤버변수 destination(전화번호 혹은 이메일 주소) 값이 ID로 사용됨
