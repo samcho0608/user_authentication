@@ -45,7 +45,7 @@ internal class MemoryVerificationRepositoryTest {
 
         val savedVerification = verificationRepository.save(verification)
 
-        val foundVerification = verificationRepository.findById(savedVerification.verificationChannel)
+        val foundVerification = verificationRepository.findById(savedVerification.verificationChannel!!)
 
         assertEquals(verification, savedVerification)
         assertEquals(verification, foundVerification)
@@ -72,6 +72,6 @@ internal class MemoryVerificationRepositoryTest {
 
         verificationRepository.delete(savedVerification)
 
-        assertEquals(null, verificationRepository.findById(verification.verificationChannel))
+        assertEquals(null, verificationRepository.findById(verification.verificationChannel!!))
     }
 }

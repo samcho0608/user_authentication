@@ -1,5 +1,6 @@
 package com.samcho.user_authentication.domain.verification
 
+import com.samcho.user_authentication.domain.core.exception.NotEnoughArgumentException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -16,14 +17,18 @@ class VerificationService @Autowired constructor(
      * @throws VerificationFailureException 인증에 실패하였을 경우 발생
      */
     fun verifyVerification(verification : Verification) {
+        if(verification.verificationChannel == null || verification.verificationCode == null) {
+            throw NotEnoughArgumentException()
+        }
+
         val foundVerification = verificationRepository.findById(verification.verificationChannel)
             ?: throw VerificationFailureException("Verification not found")
 
-        if(verification.verificationCode.code != foundVerification.verificationCode.code) {
+        if(verification.verificationCode.code != foundVerification.verificationCode!!.code) {
             throw VerificationFailureException("Verification code mismatch")
         }
 
-        if(foundVerification.isExpired()) {
+        if(foundVerification.isExpired()!!) {
             throw VerificationFailureException("Verification expired")
         }
 
@@ -34,6 +39,13 @@ class VerificationService @Autowired constructor(
      * 새로운 OTP 인증 세션을 생성함
      * @param verification 생성될 OTP 인증 세션에 대한 정보
      */
-    fun createVerification(verification : Verification) : Verification =
-        verificationRepository.save(verification)
+    fun createVerification(verification : Verification) : Verification {
+        if(verification.verificationCode == null || verification.verificationChannel == null) {
+            throw NotEnoughArgumentException()
+        }
+
+
+        return verificationRepository.save(verification)
+    }
+
 }

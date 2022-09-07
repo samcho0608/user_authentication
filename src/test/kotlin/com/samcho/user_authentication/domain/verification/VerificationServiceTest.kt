@@ -1,6 +1,7 @@
 package com.samcho.user_authentication.domain.verification
 
 import com.samcho.user_authentication.data.verification.MemoryVerificationRepository
+import com.samcho.user_authentication.domain.core.exception.NotEnoughArgumentException
 import com.samcho.user_authentication.domain.user.phone_number.PhoneNumber
 import com.samcho.user_authentication.domain.verification.verification_code.VerificationCode
 import org.junit.jupiter.api.AfterEach
@@ -22,6 +23,19 @@ internal class VerificationServiceTest {
     }
 
     @Test
+    fun verifyVerificationNotEnoughArgument() {
+
+        val verification = Verification(
+            verificationCode = VerificationCode("000000"),
+            expiration = Timestamp.from(Instant.now().plus(10, ChronoUnit.DAYS))
+        )
+
+        assertThrows(NotEnoughArgumentException::class.java) {
+            verificationService.verifyVerification(verification)
+        }
+    }
+
+    @Test
     fun createVerification() {
         val verification = Verification(
             verificationChannel = PhoneNumber("821012341234"),
@@ -31,7 +45,7 @@ internal class VerificationServiceTest {
 
         val savedVerification = verificationService.createVerification(verification)
 
-        val foundVerification = verificationRepository.findById(verification.verificationChannel)
+        val foundVerification = verificationRepository.findById(verification.verificationChannel!!)
 
         assertEquals(foundVerification!!.verificationChannel, savedVerification.verificationChannel)
     }
@@ -51,7 +65,7 @@ internal class VerificationServiceTest {
             verificationService.verifyVerification(verification)
         }
 
-        assertEquals(null, verificationRepository.findById(verification.verificationChannel))
+        assertEquals(null, verificationRepository.findById(verification.verificationChannel!!))
     }
 
     @Test

@@ -6,7 +6,7 @@ import com.samcho.user_authentication.domain.verification.VerificationRepository
 
 class MemoryVerificationRepository : VerificationRepository {
     override fun save(verification: Verification): Verification {
-        verificationDB[verification.verificationChannel] = verification
+        verificationDB[verification.verificationChannel!!] = verification
         return verificationDB[verification.verificationChannel]!!
     }
 
