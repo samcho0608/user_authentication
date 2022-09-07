@@ -8,6 +8,13 @@ class VerificationService @Autowired constructor(
     private val verificationRepository: VerificationRepository
 ){
 
+    /**
+     * OTP 인증 함수. 현재 등록된 인증 세션 중 [verification]과 일치하는 인증 세션이 있는지 확인함.
+     *
+     * 성공 시, 함수에 추가적인 동작 없음
+     * @param verification 인증할 인증 세션 정보 (인증번호 및 전화번호)
+     * @throws VerificationFailureException 인증에 실패하였을 경우 발생
+     */
     fun verifyVerification(verification : Verification) {
         val foundVerification = verificationRepository.findById(verification.verificationChannel)
             ?: throw VerificationFailureException("Verification not found")
@@ -23,6 +30,10 @@ class VerificationService @Autowired constructor(
         verificationRepository.delete(foundVerification)
     }
 
+    /**
+     * 새로운 OTP 인증 세션을 생성함
+     * @param verification 생성될 OTP 인증 세션에 대한 정보
+     */
     fun createVerification(verification : Verification) : Verification =
         verificationRepository.save(verification)
 }
