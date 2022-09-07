@@ -1,4 +1,4 @@
-package com.samcho.user_authentication.interceptors
+package com.samcho.user_authentication.domain.core.util
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

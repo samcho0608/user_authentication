@@ -9,11 +9,10 @@ import com.samcho.user_authentication.domain.verification.sms.SmsFailureExceptio
 import com.samcho.user_authentication.domain.verification.sms.SmsService
 import com.samcho.user_authentication.domain.verification.verification_code.VerificationCode
 import com.samcho.user_authentication.domain.verification.verification_code.VerificationCodeGenerator
-import com.samcho.user_authentication.interceptors.logger
+import com.samcho.user_authentication.domain.core.util.logger
 import com.samcho.user_authentication.presentation.dto.ErrorResponseBody
 import com.samcho.user_authentication.presentation.dto.SuccessResponseBody
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody

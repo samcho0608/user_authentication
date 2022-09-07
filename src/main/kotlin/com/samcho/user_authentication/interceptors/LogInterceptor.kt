@@ -1,5 +1,6 @@
 package com.samcho.user_authentication.interceptors
 
+import com.samcho.user_authentication.domain.core.util.logger
 import lombok.extern.slf4j.Slf4j
 import org.springframework.web.servlet.HandlerInterceptor
 import org.springframework.web.servlet.ModelAndView

@@ -4,9 +4,8 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.samcho.user_authentication.domain.user.phone_number.PhoneNumber
 import com.samcho.user_authentication.domain.verification.Verification
 import com.samcho.user_authentication.domain.verification.VerificationService
-import com.samcho.user_authentication.domain.verification.verification_code.VerificationCode
 import com.samcho.user_authentication.domain.verification.verification_code.VerificationCodeGenerator
-import com.samcho.user_authentication.interceptors.logger
+import com.samcho.user_authentication.domain.core.util.logger
 import org.hamcrest.Matchers.containsString
 import org.junit.jupiter.api.Test
 
@@ -32,7 +31,7 @@ internal class VerificationControllerTest @Autowired constructor(
     @Test
     fun sendVerification() {
         mockMvc.perform(
-            post("/verifications/phones",)
+            post("/verifications/phones")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
                     jacksonObjectMapper().writeValueAsString(
@@ -61,7 +60,7 @@ internal class VerificationControllerTest @Autowired constructor(
 
 
         mockMvc.perform(
-            post("/verifications/phones/verify",)
+            post("/verifications/phones/verify")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
                     jacksonObjectMapper().writeValueAsString(
