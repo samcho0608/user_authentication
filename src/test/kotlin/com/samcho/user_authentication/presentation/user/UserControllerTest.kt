@@ -81,16 +81,17 @@ internal class UserControllerTest @Autowired constructor(
                 .content(
                     jacksonObjectMapper().writeValueAsString(
                         mapOf(
-                            "nicname" to userNicknm,
+                            "nickname" to userNicknm,
                             "name" to userName,
                             "password" to userPw,
-                            "eamil" to userEmail
+                            "email" to userEmail
                         )
                     )
                 )
         )
             .andDo { logger().debug("RECEIVED REQUEST : ${it.request.contentAsString}") }
             .andExpect(MockMvcResultMatchers.status().isCreated)
+            .andDo { logger().debug("SENT RESPONSE : ${it.response.contentAsString}") }
             .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("Success")))
     }
 

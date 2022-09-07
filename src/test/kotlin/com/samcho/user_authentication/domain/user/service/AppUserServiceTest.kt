@@ -41,7 +41,7 @@ internal class AppUserServiceTest {
     fun findUserDetailUserDoesNotExists() {
         assertThrows(AppUserNotFoundException::class.java) {
 
-            appUserService.findUserDetail(AppUser().apply { id = "USER_ID" })
+            appUserService.findUserDetail("USER_ID")
         }
     }
     @Test
@@ -57,7 +57,7 @@ internal class AppUserServiceTest {
         }
         appUserService.signUp(user)
 
-        val foundUser = appUserService.findUserDetail(user)
+        val foundUser = appUserService.findUserDetail(user.nicknm)
 
         assertNotEquals(null, foundUser)
         assertEquals(user.id, foundUser.id)
@@ -70,10 +70,16 @@ internal class AppUserServiceTest {
     @Test
     fun resetPasswordUserDoesNotExist() {
         val newPassword = "new password"
+        val phoneNumber = "821084273267"
 
         assertThrows(AppUserNotFoundException::class.java) {
-
-            appUserService.resetPassword(AppUser().apply { id = "USER_ID" }, newPassword)
+            appUserService.resetPassword(
+                AppUser().apply {
+                    id = "USER_ID"
+                    this.phoneNumber = PhoneNumber(phoneNumber)
+                },
+                newPassword
+            )
         }
     }
 
@@ -88,11 +94,13 @@ internal class AppUserServiceTest {
                 "821012341234"
             )
         }
-        appUserService.signUp(user)
+        val savedUser = appUserService.signUp(user)
+
+        val oldPassword = savedUser.password
 
         val newPassword = "new password"
         appUserService.resetPassword(user, newPassword)
 
-        assertEquals(newPassword, user.password)
+        assertNotEquals(oldPassword, user.password)
     }
 }
