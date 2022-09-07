@@ -75,7 +75,7 @@ internal class VerificationControllerTest @Autowired constructor(
         )
             .andDo { logger().debug("RECEIVED REQUEST : ${it.request.contentAsString}") }
             .andExpect(status().isOk)
-            .andDo { logger().info("RECEIVED RESPONSE : ${it.response.contentAsString}") }
+            .andDo { logger().info("SENT RESPONSE : ${it.response.contentAsString}") }
             .andExpect(content().string(containsString("Success")))
     }
 }
