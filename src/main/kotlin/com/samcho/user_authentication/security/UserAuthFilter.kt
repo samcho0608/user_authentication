@@ -60,25 +60,19 @@ class UserAuthFilter constructor(
         chain: FilterChain?,
         authResult: Authentication?
     ) {
-        val random = SecureRandom.getInstanceStrong()
 
         val user = (authResult?.principal
                     ?: throw AuthenticationServiceException("Authentication Result Null")
                 ) as User
 
-        val accessTokenExp = Date.from(
-            Instant.now().plus((random.nextInt(30) + 60).toLong(), ChronoUnit.MINUTES)
-        )
-        val refreshTokenExp = Date.from(Instant.now().plus(24, ChronoUnit.HOURS))
         val accessToken = jwtFactory.createToken(
             user.username,
-            exp = accessTokenExp
+            isAccessToken = true,
         )
         val refreshToken = jwtFactory.createToken(
             user.username,
-            exp = refreshTokenExp
+            isRefreshToken = true,
         )
-
 
         response?.apply {
             contentType = APPLICATION_JSON_VALUE
