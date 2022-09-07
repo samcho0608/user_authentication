@@ -21,14 +21,14 @@ class VerificationService @Autowired constructor(
             throw NotEnoughArgumentException()
         }
 
-        val foundVerification = verificationRepository.findById(verification.verificationChannel)
+        val foundVerification = verificationRepository.findById(verification.verificationChannel!!)
             ?: throw VerificationFailureException("Verification not found")
 
-        if(verification.verificationCode.code != foundVerification.verificationCode!!.code) {
+        if(verification.verificationCode!!.code != foundVerification.verificationCode!!.code) {
             throw VerificationFailureException("Verification code mismatch")
         }
 
-        if(foundVerification.isExpired()!!) {
+        if(foundVerification.isExpired()) {
             throw VerificationFailureException("Verification expired")
         }
 

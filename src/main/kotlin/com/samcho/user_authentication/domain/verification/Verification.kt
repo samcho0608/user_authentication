@@ -14,12 +14,12 @@ import java.time.Instant
  * @param expiration 만료일
  */
 data class Verification (
-    val verificationChannel: Contact? = null,
-    val verificationCode : VerificationCode? = null,
+    var verificationChannel: Contact? = null,
+    var verificationCode : VerificationCode? = null,
     /**
      * DB에서 받아온 경우 non-null
      */
-    val expiration : Timestamp? = null,
+    var expiration : Timestamp = Timestamp.from(Instant.now()),
 ) {
-    fun isExpired() = expiration?.before(Timestamp.from(Instant.now()))
+    fun isExpired() = expiration.before(Timestamp.from(Instant.now()))
 }
