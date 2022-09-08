@@ -9,9 +9,9 @@ JWT는 Session Storage를 거치지 않기 때문에 빠르고, 확장할때 용
 여러가지 해킹 기법에 대하여 미리 공부하고 대비를 해보았습니다.
 * MITM 
   * Token을 사용할때 제일 위험한 공격이라고 생각됩니다. Access Token과 Refresh Token을 나누어 한번 뺏겨도 짧은 기간 내에 만료가 되어 효용이 없도록 방어했습니다.
-  * Insufficient Authentication, Weak Password Recovery Validation
+* Insufficient Authentication, Weak Password Recovery Validation
     * 위 부분들은 해킹 기법보다는 취약점에 가깝습니다. 본인인증을 통한 Multi-Factor Authentication으로 방어했습니다.
-  * CSRF의 경우, Spring Security의 Filter를 통해 방어했습니다.
+* CSRF의 경우, Spring Security의 Filter를 통해 방어했습니다.
 
 
 ## 주요 포인트
