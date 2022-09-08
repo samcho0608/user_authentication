@@ -43,7 +43,7 @@ sudo docker run -v user_authentication:/workspace/app  -v :/workspace/app/build 
 * CoolSms API
 
 # 구현 스펙
-## 📚 API 설계
+## API 설계
 
 ###### API Reference
 
