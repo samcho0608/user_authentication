@@ -16,6 +16,7 @@ JWT는 Session Storage를 거치지 않기 때문에 빠르고, 확장할때 용
 
 ## 주요 포인트
 ### 클래스 다이어그램
+![image info](./images/class-diagram.png)
 
 ## 주요 로직
 #### 1. 회원가입 로직
