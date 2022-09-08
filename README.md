@@ -37,8 +37,9 @@ sudo docker run -v user_authentication:/workspace/app  -v :/workspace/app/build 
 
 ## 사용기술
 * Spring & Kotlin
-* Spring Security
+* Spring Security 
 * JWT
+* CoolSms API
 
 # 구현 스펙
 ## 📚 API 설계
