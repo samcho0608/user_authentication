@@ -1,8 +1,17 @@
 # 개요
 대규모 Ecommerce와 같이 트래픽이 높고 금전거래 때문에 보안이 중요한 서비스에서는 보안이 상당히 중요합니다.
 
+이번 프로젝트의 핵심은 보안에 맞추었습니다.
 
+대규모의 경우 클라우드 환경에서 서비스 하는데, scale out이나, MSA처럼 다양한 각 기능별로 서버를 구현하는 경우, session은 부하가 너무 심하여 클라이언트가 인가 정보를 가지고 있는 JWT를 사용하기로 하였습니다.
+JWT는 Session Storage를 거치지 않기 때문에 빠르고, 확장할때 용이합니다.
 
+여러가지 해킹 기법에 대하여 미리 공부하고 대비를 해보았습니다.
+* MITM 
+  * Token을 사용할때 제일 위험한 공격이라고 생각됩니다. Access Token과 Refresh Token을 나누어 한번 뺏겨도 짧은 기간 내에 만료가 되어 효용이 없도록 방어했습니다.
+  * Insufficient Authentication, Weak Password Recovery Validation
+    * 위 부분들은 해킹 기법보다는 취약점에 가깝습니다. 본인인증을 통한 Multi-Factor Authentication으로 방어했습니다.
+  * CSRF의 경우, Spring Security의 Filter를 통해 방어했습니다.
 
 
 ## 주요 포인트
