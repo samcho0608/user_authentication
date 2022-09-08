@@ -33,6 +33,7 @@ class VerificationController @Autowired constructor(
 
     @PostMapping(ApiRoute.PHONE_VERIFICATIONS)
     fun sendPhoneVerification(@RequestBody request: PhoneVerificationRequest): ResponseEntity<Any> {
+
         val verification = verificationService.createVerification(
             Verification().apply {
                 verificationCode = VerificationCodeGenerator.generateVerificationCode()
@@ -55,6 +56,7 @@ class VerificationController @Autowired constructor(
                     )
                 )
         } catch (e : SmsFailureException) {
+            logger().debug(e.stackTrace.toString())
             ResponseEntity.badRequest().build()
         }
     }
