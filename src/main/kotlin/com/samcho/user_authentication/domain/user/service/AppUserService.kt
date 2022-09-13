@@ -72,7 +72,7 @@ class AppUserService @Autowired constructor(
             }
         } else { // 닉네임 혹은 User ID로 간주
             // ID 검색이 속도가 더 빠름
-            appUserRepository.findById(username).also {
+            appUserRepository.findAppUserById(username).also {
                 logger().info(it.toString())
             }
                 ?:
@@ -84,7 +84,7 @@ class AppUserService @Autowired constructor(
 
     fun findUser(user: AppUser): AppUser {
         validateIdSpecifiedAppUser(user)
-        return appUserRepository.findById(user.id!!) ?: throw AppUserNotFoundException()
+        return appUserRepository.findAppUserById(user.id!!) ?: throw AppUserNotFoundException()
     }
 
     /**
