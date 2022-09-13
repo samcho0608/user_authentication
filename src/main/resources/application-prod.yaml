@@ -1,0 +1,12 @@
+coolsms:
+  api-key : ${COOL_SMS_API_KEY}
+  api-secret : ${COOL_SMS_API_SECRET}
+  from-number : ${COOL_SMS_FROM_NUMBER}
+  url: https://api.coolsms.co.kr
+
+user-auth :
+  secret : ${USER_AUTH_SECRET}
+  issuer : Sungmin Cho
+
+server :
+  port : 8080
