@@ -28,5 +28,5 @@ spring:
     password: samcho
 
 app_user_repository:
-  jpa : true
-  memory: false
+  jpa: false
+  memory: true

@@ -5,6 +5,7 @@ import com.samcho.user_authentication.data.verification.MemoryVerificationReposi
 import com.samcho.user_authentication.domain.user.repository.AppUserRepository
 import com.samcho.user_authentication.domain.verification.VerificationRepository
 import com.samcho.user_authentication.interceptors.LogInterceptor
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class UserAuthenticationConfig : WebMvcConfigurer {
 
     @Bean
+    @ConditionalOnProperty(name = ["app_user_repository.memory"], havingValue = "true")
     fun appUserRepository() : AppUserRepository = MemoryAppUserRepository()
 
     @Bean
