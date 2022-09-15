@@ -36,4 +36,5 @@ out/
 ### VS Code ###
 .vscode/
 
-**/application-API-Key.yaml
+**/application-dev.yaml
+**/.run/

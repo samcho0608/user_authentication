@@ -3,8 +3,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "2.7.3"
 	id("io.spring.dependency-management") version "1.0.13.RELEASE"
-	kotlin("jvm") version "1.6.21"
-	kotlin("plugin.spring") version "1.6.21"
+	val kotlinVersion = "1.6.21"
+	id("org.jetbrains.kotlin.plugin.noarg") version kotlinVersion
+	id("org.jetbrains.kotlin.plugin.allopen") version kotlinVersion
+
+	kotlin("jvm") version kotlinVersion
+	kotlin("plugin.spring") version kotlinVersion
+	kotlin("plugin.jpa") version kotlinVersion
 }
 
 group = "com.samcho"
@@ -18,6 +23,8 @@ repositories {
 dependencies {
 	implementation("net.nurigo:sdk:4.2.4")
 	implementation("com.auth0:java-jwt:3.18.1")
+	implementation("mysql:mysql-connector-java")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")

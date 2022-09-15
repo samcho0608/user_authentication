@@ -5,6 +5,7 @@ import com.samcho.user_authentication.domain.user.AppUserDetail
 import com.samcho.user_authentication.domain.user.email_address.EmailAddress
 import com.samcho.user_authentication.domain.user.phone_number.PhoneNumber
 import com.samcho.user_authentication.domain.user.repository.AppUserRepository
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 
 /**
  * AppUserRepository 클래스에 의존하는 클래스들의 단위 테스트를 위해 구현된 테스트용 클래스
@@ -16,7 +17,7 @@ class MemoryAppUserRepository : AppUserRepository {
     override fun existsByPhoneNumber(phoneNumber: String): Boolean =
         userDB.values.any { it.phoneNumber != null && it.phoneNumber!!.phoneNumber == phoneNumber }
 
-    override fun findById(id: String): AppUser? = userDB[id]
+    override fun findAppUserById(id: String): AppUser? = userDB[id]
 
     private fun appUserToAppUserDetail(user : AppUser): AppUserDetail {
         return object : AppUserDetail {
@@ -89,7 +90,7 @@ class MemoryAppUserRepository : AppUserRepository {
     /**
      *  테스트 시에만 사용되며, 저장된 데이터를 지움
      */
-    internal fun clearDB() {
+    override fun deleteAll() {
         userDB.clear()
         userIdSequence = 0
     }

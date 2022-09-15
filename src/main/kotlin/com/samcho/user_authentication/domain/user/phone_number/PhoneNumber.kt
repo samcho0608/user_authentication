@@ -1,14 +1,16 @@
 package com.samcho.user_authentication.domain.user.phone_number
 
 import com.samcho.user_authentication.domain.core.vo.Contact
+import javax.persistence.Embeddable
 
 /**
  * 핸드폰 정보 VO
  */
+@Embeddable
 data class PhoneNumber(
-    val phoneNumber: String,
+    var phoneNumber: String,
 ) : Contact {
-    override val destination: String = phoneNumber
+    override fun destination(): String = phoneNumber
 
     init {
         if(!isInPhoneNumberFormat(phoneNumber)) {

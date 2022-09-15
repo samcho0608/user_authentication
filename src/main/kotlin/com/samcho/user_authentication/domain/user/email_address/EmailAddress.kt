@@ -1,15 +1,17 @@
 package com.samcho.user_authentication.domain.user.email_address
 
 import com.samcho.user_authentication.domain.core.vo.Contact
+import javax.persistence.Embeddable
 
 /**
  * 이메일 주소를 저장하는 VO
  * @throws InvalidEmailAddressFormatException 이메일 주소값의 형식이 유효하지 않을 경우, 예외 처리
  */
+@Embeddable
 data class EmailAddress(
-    val emailAddress: String,
+    var emailAddress: String,
 ) : Contact {
-    override val destination: String = emailAddress
+    override fun destination() = emailAddress
     init {
         if(!isInEmailAddressFormat(emailAddress)) {
             throw InvalidEmailAddressFormatException()
