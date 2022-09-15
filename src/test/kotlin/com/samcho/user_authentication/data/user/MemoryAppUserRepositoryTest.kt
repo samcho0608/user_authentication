@@ -14,7 +14,7 @@ internal class MemoryAppUserRepositoryTest {
 
     @AfterEach
     fun afterEach() {
-        userRepo.clearDB()
+        userRepo.deleteAll()
     }
 
     @Test
@@ -30,7 +30,7 @@ internal class MemoryAppUserRepositoryTest {
         }
 
         val savedUser = userRepo.save(user)
-        val foundUser = userRepo.findById(user.id!!)
+        val foundUser = userRepo.findAppUserById(user.id!!)
 
         assertEquals(savedUser.id, foundUser!!.id)
     }
@@ -176,7 +176,7 @@ internal class MemoryAppUserRepositoryTest {
         val newPassword = "new password"
 
         userRepo.updatePasswordById(id =  savedUser.id!!, newPassword= newPassword)
-        val targetUser = userRepo.findById(savedUser.id!!)
+        val targetUser = userRepo.findAppUserById(savedUser.id!!)
 
         assertEquals(newPassword, targetUser!!.password)
     }

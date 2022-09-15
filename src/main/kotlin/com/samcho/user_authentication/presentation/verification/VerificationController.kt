@@ -6,10 +6,10 @@ import com.samcho.user_authentication.domain.verification.Verification
 import com.samcho.user_authentication.domain.verification.VerificationFailureException
 import com.samcho.user_authentication.domain.verification.VerificationService
 import com.samcho.user_authentication.domain.verification.sms.SmsFailureException
-import com.samcho.user_authentication.domain.verification.sms.SmsService
 import com.samcho.user_authentication.domain.verification.verification_code.VerificationCode
 import com.samcho.user_authentication.domain.verification.verification_code.VerificationCodeGenerator
 import com.samcho.user_authentication.domain.core.util.logger
+import com.samcho.user_authentication.domain.verification.sms.SmsService
 import com.samcho.user_authentication.presentation.ApiRoute
 import com.samcho.user_authentication.presentation.dto.ErrorResponseBody
 import com.samcho.user_authentication.presentation.dto.SuccessResponseBody

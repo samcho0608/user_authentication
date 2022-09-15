@@ -1,19 +1,26 @@
 package com.samcho.user_authentication.domain.user.service
 
-import com.samcho.user_authentication.data.user.MemoryAppUserRepository
 import com.samcho.user_authentication.domain.user.AppUser
 import com.samcho.user_authentication.domain.user.AppUserNotFoundException
 import com.samcho.user_authentication.domain.user.email_address.EmailAddress
 import com.samcho.user_authentication.domain.user.phone_number.PhoneNumber
+import com.samcho.user_authentication.domain.user.repository.AppUserRepository
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
+import javax.transaction.Transactional
 
-internal class AppUserServiceTest {
+@SpringBootTest
+@Transactional
+@ActiveProfiles(profiles = ["integration-test"])
+internal class AppUserServiceIntegrationTest{
 
-    private val appUserRepository = MemoryAppUserRepository()
-    private val appUserService = AppUserService(appUserRepository, BCryptPasswordEncoder())
+    @Autowired private lateinit var appUserService: AppUserService
+    @Autowired private lateinit var appUserRepository: AppUserRepository
+
 
     @AfterEach
     fun afterEach() {

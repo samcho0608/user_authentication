@@ -46,7 +46,7 @@ internal class VerificationTest {
             expiration = Timestamp.from(Instant.now().plus(10, ChronoUnit.DAYS))
         )
 
-        assertEquals(phoneNumber.phoneNumber, verification.verificationChannel!!.destination)
+        assertEquals(phoneNumber.phoneNumber, verification.verificationChannel!!.destination())
     }
 
     @Test
@@ -59,6 +59,6 @@ internal class VerificationTest {
             expiration = Timestamp.from(Instant.now().plus(10, ChronoUnit.DAYS))
         )
 
-        assertEquals(emailAddress.emailAddress, verification.verificationChannel!!.destination)
+        assertEquals(emailAddress.emailAddress, verification.verificationChannel!!.destination())
     }
 }
