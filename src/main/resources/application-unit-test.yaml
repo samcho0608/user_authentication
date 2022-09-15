@@ -5,7 +5,7 @@ coolsms:
   url: https://api.coolsms.co.kr
 
 user-auth :
-  secret : ${USER_AUTH_SECRET}
+  secret : "TEST"
   issuer : Sungmin Cho
 
 server :
@@ -23,10 +23,12 @@ spring:
         format_sql: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/userAuth?useSSL=false&verifyServerCertificate=false
+    url: jdbc:mysql://127.0.0.1:3306/userAuth_test?useSSL=false&verifyServerCertificate=false
     username: spring
     password: samcho
 
 app_user_repository:
-  jpa: false
-  memory: true
+  mock : true
+
+sms_service:
+  mock: true

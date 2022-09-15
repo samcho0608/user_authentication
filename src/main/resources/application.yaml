@@ -14,4 +14,10 @@ spring:
 
 spring:
   profiles:
-    active: test
+    active: unit-test
+
+---
+
+spring:
+  profiles:
+    active: integration-test

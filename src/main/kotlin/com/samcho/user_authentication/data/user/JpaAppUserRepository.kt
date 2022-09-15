@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 
-@ConditionalOnProperty(name = ["app_user_repository.jpa"], havingValue = "true")
+@ConditionalOnProperty(name = ["app_user_repository.mock"], havingValue = "false")
 interface JpaAppUserRepository : AppUserRepository, JpaRepository<AppUser, String> {
 
     @Modifying

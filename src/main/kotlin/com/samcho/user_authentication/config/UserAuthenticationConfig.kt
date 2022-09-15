@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class UserAuthenticationConfig : WebMvcConfigurer {
 
     @Bean
-    @ConditionalOnProperty(name = ["app_user_repository.memory"], havingValue = "true")
+    @ConditionalOnProperty(name = ["app_user_repository.mock"], havingValue = "false")
     fun appUserRepository() : AppUserRepository = MemoryAppUserRepository()
 
     @Bean

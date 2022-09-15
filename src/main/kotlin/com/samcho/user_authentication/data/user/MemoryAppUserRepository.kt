@@ -90,7 +90,7 @@ class MemoryAppUserRepository : AppUserRepository {
     /**
      *  테스트 시에만 사용되며, 저장된 데이터를 지움
      */
-    internal fun clearDB() {
+    override fun deleteAll() {
         userDB.clear()
         userIdSequence = 0
     }

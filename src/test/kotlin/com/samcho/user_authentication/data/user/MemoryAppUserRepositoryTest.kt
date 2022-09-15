@@ -14,7 +14,7 @@ internal class MemoryAppUserRepositoryTest {
 
     @AfterEach
     fun afterEach() {
-        userRepo.clearDB()
+        userRepo.deleteAll()
     }
 
     @Test
