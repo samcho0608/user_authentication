@@ -8,7 +8,7 @@ import net.nurigo.sdk.message.service.DefaultMessageService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 
-class CoolSmsService @Autowired constructor(
+class CoolSmsService constructor(
     private val messageService: DefaultMessageService,
     private val fromNumber : String,
 ) : SmsService{
